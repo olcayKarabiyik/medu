@@ -348,15 +348,15 @@ jobs:
   #      tag: ${{ github.ref_name }}
   #      writeToFile: false
 
-    - name: Update GitHub Release
-      uses: ncipollo/release-action@v1.12.0
-      with:
-        allowUpdates: true
-        draft: false
-        makeLatest: true
-        name: ${{ github.ref_name }}
-        body: ${{ steps.changelog.outputs.changes }}
-        token: ${{ github.token }}
+  #  - name: Update GitHub Release
+  #    uses: ncipollo/release-action@v1.12.0
+  #    with:
+  #      allowUpdates: true
+  #      draft: false
+  #      makeLatest: true
+  #      name: ${{ github.ref_name }}
+  #      body: ${{ steps.changelog.outputs.changes }}
+  #      token: ${{ github.token }}
   #      artifacts: 'drop/wiki-js.tar.gz,drop-win/wiki-js-windows.tar.gz'
 
   # build-do-image:
