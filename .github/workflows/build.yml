@@ -339,13 +339,13 @@ jobs:
         name: drop-win
         path: drop-win
 
-    - name: Generate Changelog
-      id: changelog
-      uses: Requarks/changelog-action@v1
-      with:
-        token: ${{ github.token }}
-        tag: ${{ github.ref_name }}
-        writeToFile: false
+  # - name: Generate Changelog
+  #    id: changelog
+  #    uses: Requarks/changelog-action@v1
+  #    with:
+  #      token: ${{ github.token }}
+  #      tag: ${{ github.ref_name }}
+  #      writeToFile: false
 
     - name: Update GitHub Release
       uses: ncipollo/release-action@v1.12.0
