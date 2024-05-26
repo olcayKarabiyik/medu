@@ -24,6 +24,7 @@ jobs:
 
     - name: Build Droplet Image
       env:
+        ## TODO: get a DO_TOKEN (DigitalOcean Personal Access Token)
         DIGITALOCEAN_API_TOKEN: ${{ secrets.DO_TOKEN }}
         WIKI_APP_VERSION: ${{ github.event.inputs.version }}
       working-directory: dev/packer
