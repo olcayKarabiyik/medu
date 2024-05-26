@@ -254,17 +254,17 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create and Push Manifests
-      run: |
-        echo "Creating the manifests..."
-
-        docker manifest create requarks/wiki:beta-$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
-
-        echo "Pushing the manifests..."
-
-        docker manifest push -p requarks/wiki:beta-$REL_VERSION_STRICT
-        docker manifest push -p ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT
+    #- name: Create and Push Manifests
+    #  run: |
+    #    echo "Creating the manifests..."
+#
+    #    docker manifest create requarks/wiki:beta-$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
+#
+    #    echo "Pushing the manifests..."
+#
+    #    docker manifest push -p requarks/wiki:beta-$REL_VERSION_STRICT
+    #    docker manifest push -p ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT
 
   release:
     name: Publish Release Images
@@ -295,38 +295,38 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create and Push Manifests
-      run: |
-        echo "Fetching semver tool..."
-        curl -LJO https://static.requarks.io/semver
-        chmod +x semver
-
-        MAJOR=`./semver get major $REL_VERSION_STRICT`
-        MINOR=`./semver get minor $REL_VERSION_STRICT`
-        MAJORMINOR="$MAJOR.$MINOR"
-
-        echo "Using major $MAJOR and minor $MINOR..."
-        echo "Creating the manifests..."
-
-        docker manifest create requarks/wiki:$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create requarks/wiki:$MAJOR requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create requarks/wiki:$MAJORMINOR requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create requarks/wiki:latest requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$MAJOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$MAJORMINOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:latest ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
-
-        echo "Pushing the manifests..."
-
-        docker manifest push -p requarks/wiki:$REL_VERSION_STRICT
-        docker manifest push -p requarks/wiki:$MAJOR
-        docker manifest push -p requarks/wiki:$MAJORMINOR
-        docker manifest push -p requarks/wiki:latest
-        docker manifest push -p ghcr.io/requarks/wiki:$REL_VERSION_STRICT
-        docker manifest push -p ghcr.io/requarks/wiki:$MAJOR
-        docker manifest push -p ghcr.io/requarks/wiki:$MAJORMINOR
-        docker manifest push -p ghcr.io/requarks/wiki:latest
+    #- name: Create and Push Manifests
+    #  run: |
+    #    echo "Fetching semver tool..."
+    #    curl -LJO https://static.requarks.io/semver
+    #    chmod +x semver
+#
+    #    MAJOR=`./semver get major $REL_VERSION_STRICT`
+    #    MINOR=`./semver get minor $REL_VERSION_STRICT`
+    #    MAJORMINOR="$MAJOR.$MINOR"
+#
+    #    echo "Using major $MAJOR and minor $MINOR..."
+    #    echo "Creating the manifests..."
+#
+    #    docker manifest create requarks/wiki:$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create requarks/wiki:$MAJOR requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create requarks/wiki:$MAJORMINOR requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create requarks/wiki:latest requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create ghcr.io/requarks/wiki:$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create ghcr.io/requarks/wiki:$MAJOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create ghcr.io/requarks/wiki:$MAJORMINOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
+    #    docker manifest create ghcr.io/requarks/wiki:latest ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
+#
+    #    echo "Pushing the manifests..."
+#
+    #    docker manifest push -p requarks/wiki:$REL_VERSION_STRICT
+    #    docker manifest push -p requarks/wiki:$MAJOR
+    #    docker manifest push -p requarks/wiki:$MAJORMINOR
+    #    docker manifest push -p requarks/wiki:latest
+    #    docker manifest push -p ghcr.io/requarks/wiki:$REL_VERSION_STRICT
+    #    docker manifest push -p ghcr.io/requarks/wiki:$MAJOR
+    #    docker manifest push -p ghcr.io/requarks/wiki:$MAJORMINOR
+    #    docker manifest push -p ghcr.io/requarks/wiki:latest
 
     - name: Download Linux Build
       uses: actions/download-artifact@v4
