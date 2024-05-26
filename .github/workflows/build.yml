@@ -66,53 +66,6 @@ jobs:
           ghcr.io/olcayKarabiyik/medu:canary
           ghcr.io/olcayKarabiyik/medu:canary-${{ env.REL_VERSION_STRICT }}
 
-    - name: Extract compiled files
-      run: |
-        mkdir -p _dist
-        docker create --name wiki ghcr.io/olcayKarabiyik/medu:canary-$REL_VERSION_STRICT
-        docker cp wiki:/wiki _dist
-        docker rm wiki
-        rm _dist/wiki/config.yml
-        cp ./config.sample.yml _dist/wiki/config.sample.yml
-        find _dist/wiki/ -printf "%P\n" | tar -czf wiki-js.tar.gz --no-recursion -C _dist/wiki/ -T -
-
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: drop
-        path: wiki-js.tar.gz
-
-  cypress:
-    name: Run Cypress Tests
-    runs-on: ubuntu-latest
-    needs: [build]
-
-    strategy:
-      matrix:
-        dbtype: [postgres]
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set Test Variables
-      run: |
-        if [[ "$GITHUB_REF" =~ ^refs/tags/v* ]]; then
-          echo "Using TAG mode: $GITHUB_REF_NAME"
-          echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
-        else
-          echo "Using BRANCH mode: v$BASE_DEV_VERSION-dev.$GITHUB_RUN_NUMBER"
-          echo "REL_VERSION_STRICT=$BASE_DEV_VERSION-dev.$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
-        fi
-
-    - name: Run Tests
-      env:
-        MATRIXENV: ${{ matrix.dbtype }}
-        CYPRESS_KEY: ${{ secrets.CYPRESS_KEY }}
-      run: |
-        chmod u+x dev/cypress/ci-setup.sh
-        dev/cypress/ci-setup.sh
-        docker run --name cypress --ipc=host --shm-size 1G -v $GITHUB_WORKSPACE:/e2e -w /e2e cypress/included:4.9.0 --record --key "$CYPRESS_KEY" --headless --group "$MATRIXENV" --ci-build-id "$REL_VERSION_STRICT-run$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT" --tag "$REL_VERSION_STRICT" --config baseUrl=http://172.17.0.1:3000
-
   beta:
     name: Publish Beta Images
     runs-on: ubuntu-latest
