@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-    working-directory: dev/build
+
     steps:
     - uses: actions/checkout@v4
 
@@ -58,7 +58,7 @@ jobs:
     - name: Build and push Docker images
       uses: docker/compose-action@v2
       with:
-        compose_file: 'docker-compose.yml'
+        compose_file: '../../docker-compose.yml'
         build: true
         tags: |
           docker.io/olcayKarabiyik/medu:canary
