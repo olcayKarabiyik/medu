@@ -1,0 +1,35 @@
+version: '3.7'  # Use a newer version of Docker Compose
+
+services:
+  db:
+    image: postgres:11  # PostgreSQL database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: wiki
+      POSTGRES_USER: wiki
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password  # Use Docker secrets for sensitive data
+    volumes:
+      - pgdata:/var/lib/postgresql/data  # Persistent volume for database data
+      - ./wikijs/.db-secret:/run/secrets/db_password:ro # Load database password from file
+
+  wiki:
+    build: .       # Build the medu image using the Dockerfile in the current directory
+    restart: unless-stopped
+    depends_on:  # Ensure database is up before starting Wiki.js
+      - db
+    ports:
+      - "80:3000"  # Map internal port 3000 to host port 80
+      - "443:3443" # Map internal port 3443 to host port 443
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: wiki
+      DB_NAME: wiki
+      DB_PASS_FILE: /run/secrets/db_password
+    volumes:
+      - ./wikijs/.db-secret:/run/secrets/db_password:ro
+    push: true
+
+volumes:
+  pgdata:  # Named volume for PostgreSQL data persistence
