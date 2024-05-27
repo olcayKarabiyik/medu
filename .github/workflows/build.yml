@@ -60,11 +60,11 @@ jobs:
       with:
         compose_file: '../../docker-compose.yml'
         build: true
-        tags: |
-          docker.io/olcayKarabiyik/medu:canary
-          docker.io/olcayKarabiyik/medu:canary-${{ env.REL_VERSION_STRICT }}
-          ghcr.io/olcayKarabiyik/medu:canary
-          ghcr.io/olcayKarabiyik/medu:canary-${{ env.REL_VERSION_STRICT }}
+        #tags: |
+        #  docker.io/olcayKarabiyik/medu:canary
+        #  docker.io/olcayKarabiyik/medu:canary-${{ env.REL_VERSION_STRICT }}
+        #  ghcr.io/olcayKarabiyik/medu:canary
+        #  ghcr.io/olcayKarabiyik/medu:canary-${{ env.REL_VERSION_STRICT }}
 
   beta:
     name: Publish Beta Images
