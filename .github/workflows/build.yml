@@ -35,6 +35,7 @@ jobs:
 
     - name: Disable DEV Flag + Set Version
       run: |
+        sudo apt-get update
         sudo apt-get install jq -y
         mv package.json pkg-temp.json
         jq --arg vs "$REL_VERSION_STRICT" -r '. + {dev:false, version:$vs}' pkg-temp.json > package.json
