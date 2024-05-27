@@ -29,7 +29,6 @@ services:
       DB_PASS_FILE: /run/secrets/db_password
     volumes:
       - ./wikijs/.db-secret:/run/secrets/db_password:ro
-    push: true
 
 volumes:
   pgdata:  # Named volume for PostgreSQL data persistence
