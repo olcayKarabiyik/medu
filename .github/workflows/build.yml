@@ -46,6 +46,14 @@ jobs:
         echo "github.repository_owner: $github.repository_owner"
         echo "GITHUB_TOKEN: $secrets.GITHUB_TOKEN"
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install docker-compose -y
+
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
       with:
@@ -59,16 +67,10 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Docker Compose Action
-      uses: docker/compose-action@v2
-      with:
-        compose_file: '../../docker-compose.yml'
-        build: true
-        #tags: |
-        #  docker.io/olcayKarabiyik/medu:canary
-        #  docker.io/olcayKarabiyik/medu:canary-${{ env.REL_VERSION_STRICT }}
-        #  ghcr.io/olcayKarabiyik/medu:canary
-        #  ghcr.io/olcayKarabiyik/medu:canary-${{ env.REL_VERSION_STRICT }}
+    - name: Build and push Docker images
+      run: |
+        docker-compose -f dev/build/docker-compose.yml build
+        docker-compose -f dev/build/docker-compose.yml push
 
   beta:
     name: Publish Beta Images
