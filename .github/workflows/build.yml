@@ -8,9 +8,6 @@ on:
   #    - 'v*'
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 env:
   BASE_DEV_VERSION: 1.0.0
 
@@ -25,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        repository: ${{ github.repository_owner }}
+        repository: "olcayKarabiyik/medu"
         token: ${{ secrets.PAT }}
 
     - name: Set Build Variables
