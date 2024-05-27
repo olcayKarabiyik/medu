@@ -84,17 +84,14 @@
     "filesize": "6.1.0",
     "fs-extra": "9.0.1",
     "getos": "3.2.1",
-<<<<<<< HEAD
     "graphql": "15.3.0",
     "graphql-list-fields": "2.0.2",
     "graphql-rate-limit-directive": "1.2.1",
     "graphql-subscriptions": "1.1.0",
-=======
     "graphql": "15.7.2",
     "graphql-list-fields": "2.0.2",
     "graphql-rate-limit-directive": "1.2.1",
     "graphql-subscriptions": "2.0.0",
->>>>>>> origin/main
     "graphql-tools": "7.0.0",
     "he": "1.2.0",
     "highlight.js": "10.3.1",
@@ -143,11 +140,9 @@
     "nodemailer": "6.9.1",
     "objection": "2.2.18",
     "passport": "0.4.1",
-<<<<<<< HEAD
     "passport-google-oauth20": "2.0.0",
     "passport-jwt": "4.0.1",
     "passport-local": "1.0.0",
-=======
     "passport-auth0": "1.4.3",
     "passport-azure-ad": "4.3.4",
     "passport-cas": "0.1.1",
@@ -167,7 +162,6 @@
     "passport-saml": "3.2.4",
     "passport-slack-oauth2": "1.1.1",
     "passport-twitch-strategy": "2.2.0",
->>>>>>> origin/main
     "patch-package": "8.0.0",
     "pem-jwk": "2.0.0",
     "pg": "8.9.0",
@@ -351,11 +345,8 @@
   },
   "resolutions": {
     "apollo-server-express/**/graphql-tools": "4.0.8",
-<<<<<<< HEAD
     "graphql": "15.3.0"
-=======
     "graphql": "15.7.2"
->>>>>>> origin/main
   },
   "browserslist": [
     "> 1%",
