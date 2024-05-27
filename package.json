@@ -38,10 +38,7 @@
   },
   "dependencies": {
     "@azure/storage-blob": "12.12.0",
-<<<<<<< HEAD
-=======
     "@exlinc/keycloak-passport": "1.0.2",
->>>>>>> origin/main
     "@joplin/turndown-plugin-gfm": "1.0.45",
     "@root/csr": "0.8.1",
     "@root/keypairs": "0.10.3",
