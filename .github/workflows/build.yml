@@ -24,6 +24,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        repository: ${{ github.repository_owner }}
+        token: ${{ secrets.PAT }}
 
     - name: Set Build Variables
       run: |
