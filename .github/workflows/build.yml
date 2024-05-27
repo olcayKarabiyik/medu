@@ -35,12 +35,12 @@ jobs:
 
     - name: Disable DEV Flag + Set Version
       run: |
+        echo "DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}"
+        echo "DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}"
+        echo "github.repository_owner: ${{ github.repository_owner }}"
+        echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
         sudo apt-get install jq -y
         mv package.json pkg-temp.json
         jq --arg vs "$REL_VERSION_STRICT" -r '. + {dev:false, version:$vs}' pkg-temp.json > package.json
         rm pkg-temp.json
         cat package.json
-        echo "DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}"
-        echo "DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}"
-        echo "github.repository_owner: ${{ github.repository_owner }}"
-        echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
