@@ -13,7 +13,9 @@ services:
       - ./wikijs/.db-secret:/run/secrets/db_password:ro # Load database password from file
 
   wiki:
-    build: .       # Build the medu image using the Dockerfile in the current directory
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:  # Ensure database is up before starting Wiki.js
       - db
