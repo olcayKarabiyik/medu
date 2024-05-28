@@ -4,7 +4,7 @@
 FROM node:18-alpine AS assets
 
 RUN apk add yarn g++ make cmake python3 --no-cache
-
+RUN echo "$PWD"
 WORKDIR /wiki
 
 COPY ./client ./client
