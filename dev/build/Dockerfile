@@ -5,24 +5,15 @@ FROM node:18-alpine AS assets
 
 RUN apk add yarn g++ make cmake python3 --no-cache
 
-WORKDIR /wiki
+WORKDIR /medu
 
-# ====================
-# --- Build Assets ---
-# ====================
-FROM node:18-alpine AS assets
-
-RUN apk add yarn g++ make cmake python3 --no-cache
-
-WORKDIR /wiki
-
-COPY ../../../client ./client
-COPY ../../../dev ./dev
-COPY ../../../patches ./patches
-COPY ../../../package.json ./package.json
-COPY ../../../.babelrc ./.babelrc
-COPY ../../../.eslintignore ./.eslintignore
-COPY ../../../.eslintrc.yml ./.eslintrc.yml
+COPY ./client ./client
+COPY ./dev ./dev
+COPY ./patches ./patches
+COPY ./package.json ./package.json
+COPY ./.babelrc ./.babelrc
+COPY ./.eslintignore ./.eslintignore
+COPY ./.eslintrc.yml ./.eslintrc.yml
 
 RUN yarn cache clean
 RUN yarn --frozen-lockfile --non-interactive
@@ -43,15 +34,15 @@ RUN apk add bash curl git openssh gnupg sqlite --no-cache && \
     mkdir -p /wiki/data/content && \
     chown -R node:node /wiki /logs
 
-WORKDIR /wiki
+WORKDIR /medu
 
 COPY --chown=node:node --from=assets /wiki/assets ./assets
 COPY --chown=node:node --from=assets /wiki/node_modules ./node_modules
-COPY --chown=node:node --from=assets /wiki/server ./server
+COPY --chown=node:node ./server ./server
 COPY --chown=node:node --from=assets /wiki/server/views ./server/views
-COPY --chown=node:node --from=assets /wiki/dev/build/config.yml ./config.yml
-COPY --chown=node:node --from=assets /wiki/package.json ./package.json
-COPY --chown=node:node --from=assets /wiki/LICENSE ./LICENSE
+COPY --chown=node:node ./dev/build/config.yml ./config.yml
+COPY --chown=node:node ./package.json ./package.json
+COPY --chown=node:node ./LICENSE ./LICENSE
 
 USER node
 
