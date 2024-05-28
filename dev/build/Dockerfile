@@ -3,17 +3,17 @@
 # ====================
 FROM node:18-alpine AS assets
 
-RUN apk add yarn g++ make cmake python3 --no-cache --progress=plain
-CMD ["echo", "alooooooo"]
+RUN apk add yarn g++ make cmake python3 --no-cache
+
 WORKDIR /wiki
 
-COPY ./client ./client
-COPY ./dev ./dev
-COPY ./patches ./patches
-COPY ./package.json ./package.json
-COPY ./.babelrc ./.babelrc
-COPY ./.eslintignore ./.eslintignore
-COPY ./.eslintrc.yml ./.eslintrc.yml
+COPY ../client ./client
+COPY ../dev ./dev
+COPY ../patches ./patches
+COPY ../package.json ./package.json
+COPY ../.babelrc ./.babelrc
+COPY ../.eslintignore ./.eslintignore
+COPY ../.eslintrc.yml ./.eslintrc.yml
 
 RUN yarn cache clean
 RUN yarn --frozen-lockfile --non-interactive
