@@ -7,13 +7,13 @@ RUN apk add yarn g++ make cmake python3 --no-cache
 
 RUN mkdir -p /medu
 
-COPY ./client medu/client
-COPY ./dev medu/dev
-COPY ./patches medu/patches
-COPY ./package.json medu/package.json
-COPY ./.babelrc medu/.babelrc
-COPY ./.eslintignore medu/.eslintignore
-COPY ./.eslintrc.yml medu/.eslintrc.yml
+COPY client medu/client
+COPY dev medu/dev
+COPY patches medu/patches
+COPY package.json medu/package.json
+COPY .babelrc medu/.babelrc
+COPY .eslintignore medu/.eslintignore
+COPY .eslintrc.yml medu/.eslintrc.yml
 
 RUN yarn cache clean
 RUN yarn --frozen-lockfile --non-interactive
