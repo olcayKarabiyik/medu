@@ -65,10 +65,11 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker images
+      #run: |
+      #  ls
       run: |
         ls
-      #run: |
-      #  docker-compose -f dev/build/docker-compose.yml build
+        docker-compose -f docker-compose.yml build
       #  docker-compose -f dev/build/docker-compose.yml push
 
   beta:
