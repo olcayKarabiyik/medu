@@ -5,17 +5,17 @@ services:
     image: postgres:11  # PostgreSQL database
     restart: unless-stopped
     environment:
-      POSTGRES_DB: wiki
-      POSTGRES_USER: wiki
+      POSTGRES_DB: medu
+      POSTGRES_USER: medu
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password  # Use Docker secrets for sensitive data
     volumes:
       - pgdata:/var/lib/postgresql/data  # Persistent volume for database data
       - ./wikijs/.db-secret:/run/secrets/db_password:ro # Load database password from file
 
-  wiki:
+  medu:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: dev/build/Dockerfile
     restart: unless-stopped
     depends_on:  # Ensure database is up before starting Wiki.js
       - db
@@ -26,11 +26,14 @@ services:
       DB_TYPE: postgres
       DB_HOST: db
       DB_PORT: 5432
-      DB_USER: wiki
-      DB_NAME: wiki
+      DB_USER: medu
+      DB_NAME: medu
       DB_PASS_FILE: /run/secrets/db_password
     volumes:
-      - ./wikijs/.db-secret:/run/secrets/db_password:ro
+      - ../..:/medu
+      - /medu/node_modules
+      - /medu/.git
+      - ./meduApp/.db-secret:/run/secrets/db_password:ro
 
 volumes:
   pgdata:  # Named volume for PostgreSQL data persistence

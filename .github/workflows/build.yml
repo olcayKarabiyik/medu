@@ -65,87 +65,85 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker images
-      #run: |
-      #  ls
       run: |
-        ls
-        docker-compose -f docker-compose.yml build
-      #  docker-compose -f dev/build/docker-compose.yml push
+        docker-compose -f dev/build/docker-compose.yml build
+        docker-compose -f dev/build/docker-compose.yml push
 
-  beta:
-    name: Publish Beta Images
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build]
-    permissions:
-      packages: write
-
-    steps:
-    - name: Set Version Variables
-      run: |
-        echo "Using TAG mode: $GITHUB_REF_NAME"
-        echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
-
-  release:
-    name: Publish Release Images
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
-    # TODO: github'ta settings > environments bölümünden prod environmenti oluşturulacak
-    # bunun için önce github pro'ya geçilmesi gerekiyor
-    environment: prod
-    needs: [beta]
-    permissions:
-      packages: write
-      contents: write
-
-    steps:
-    - name: Set Version Variables
-      run: |
-        echo "Using TAG mode: $GITHUB_REF_NAME"
-        echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
-
-    - name: Login to DockerHub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Download Linux Build
-      uses: actions/download-artifact@v4
-      with:
-        name: drop
-        path: drop
-
-  build-do-image:
-    name: Build DigitalOcean Image
-    runs-on: ubuntu-latest
-    needs: [release]
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set Version Variables
-      run: |
-        echo "Using TAG mode: $GITHUB_REF_NAME"
-        echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
-
-    - name: Install Packer
-      run: |
-        curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-        sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-        sudo apt-get update && sudo apt-get install packer
-
-    - name: Build Droplet Image
-      env:
-        DIGITALOCEAN_API_TOKEN: ${{ secrets.DO_TOKEN }}
-        WIKI_APP_VERSION: ${{ env.REL_VERSION_STRICT }}
-      working-directory: dev/packer
-      run: |
-        packer build digitalocean.json
+#  beta:
+#    name: Publish Beta Images
+#    runs-on: ubuntu-latest
+#    if: startsWith(github.ref, 'refs/tags/v')
+#    needs: [build]
+#    permissions:
+#      packages: write
+#
+#    steps:
+#    - name: Set Version Variables
+#      run: |
+#        echo "Using TAG mode: $GITHUB_REF_NAME"
+#        echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
+#
+#  release:
+#    name: Publish Release Images
+#    runs-on: ubuntu-latest
+#    if: startsWith(github.ref, 'refs/tags/v')
+#    # TODO: github'ta settings > environments bölümünden prod environmenti oluşturulacak
+#    # bunun için önce github pro'ya geçilmesi gerekiyor
+#    environment: prod
+#    needs: [beta]
+#    permissions:
+#      packages: write
+#      contents: write
+#
+#    steps:
+#    - name: Set Version Variables
+#      run: |
+#        echo "Using TAG mode: $GITHUB_REF_NAME"
+#        echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
+#
+#    - name: Login to DockerHub
+#      uses: docker/login-action@v3
+#      with:
+#        username: ${{ secrets.DOCKERHUB_USERNAME }}
+#        password: ${{ secrets.DOCKERHUB_TOKEN }}
+#
+#    - name: Login to GitHub Container Registry
+#      uses: docker/login-action@v3
+#      with:
+#        registry: ghcr.io
+#        username: ${{ github.repository_owner }}
+#        password: ${{ secrets.GITHUB_TOKEN }}
+#
+#    - name: Download Linux Build
+#      uses: actions/download-artifact@v4
+#      with:
+#        name: drop
+#        path: drop
+#
+#  build-do-image:
+#    name: Build DigitalOcean Image
+#    runs-on: ubuntu-latest
+#    needs: [release]
+#
+#    steps:
+#    - uses: actions/checkout@v4
+#
+#    - name: Set Version Variables
+#      run: |
+#        echo "Using TAG mode: $GITHUB_REF_NAME"
+#        echo "REL_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
+#
+#    - name: Install Packer
+#      run: |
+#        curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+#        sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+#        sudo apt-get update && sudo apt-get install packer
+#
+#    - name: Build Droplet Image
+#      env:
+#        DIGITALOCEAN_API_TOKEN: ${{ secrets.DO_TOKEN }}
+#        WIKI_APP_VERSION: ${{ env.REL_VERSION_STRICT }}
+#      working-directory: dev/packer
+#      run: |
+#        packer build digitalocean.json
+#
