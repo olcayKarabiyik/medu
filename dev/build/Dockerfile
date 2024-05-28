@@ -7,13 +7,13 @@ RUN apk add yarn g++ make cmake python3 --no-cache
 
 WORKDIR /wiki
 
-COPY /wiki/client ./client
-COPY /wiki/dev ./dev
-COPY /wiki/patches ./patches
-COPY /wiki/package.json ./package.json
-COPY /wiki/.babelrc ./.babelrc
-COPY /wiki/.eslintignore ./.eslintignore
-COPY /wiki/.eslintrc.yml ./.eslintrc.yml
+COPY ./client ./client
+COPY ./dev ./dev
+COPY ./patches ./patches
+COPY ./package.json ./package.json
+COPY ./.babelrc ./.babelrc
+COPY ./.eslintignore ./.eslintignore
+COPY ./.eslintrc.yml ./.eslintrc.yml
 
 RUN yarn cache clean
 RUN yarn --frozen-lockfile --non-interactive
