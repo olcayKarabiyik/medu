@@ -49,7 +49,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install docker-compose -y
-        echo "Working Directory: ${env.PWD}"
+        echo "Working Directory: ${PWD}"
 
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
