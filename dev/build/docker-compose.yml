@@ -16,9 +16,8 @@ services:
     build:
       context: ../..
       dockerfile: dev/build/Dockerfile
-    image: olcayKarabiyik/medu:latest
     restart: always
-    depends_on:  # Ensure database is up before starting Wiki.js
+    depends_on:  # Ensure database is up before starting medu
       - db
     ports:
       - "80:3000"  # Map internal port 3000 to host port 80
