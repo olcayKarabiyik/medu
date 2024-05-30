@@ -50,7 +50,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install docker-compose -y
-        docker-compose --version
+        docker compose version
 
 #    EXPLN: since we do not have a container on GHCR (because of we are private repo)
 #           this will wait.
