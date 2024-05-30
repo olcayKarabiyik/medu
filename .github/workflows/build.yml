@@ -48,7 +48,9 @@ jobs:
 
     - name: Install Docker Compose
       run: |
+        sudo apt-get update
         sudo apt-get install docker-compose -y
+        docker-compose --version
 
 #    EXPLN: since we do not have a container on GHCR (because of we are private repo)
 #           this will wait.
@@ -67,10 +69,8 @@ jobs:
 
     - name: Build and push Docker images
       run: |
-        docker-compose version
-#      run: |
-#        docker-compose -f dev/build/docker-compose.yml build
-#        docker-compose -f dev/build/docker-compose.yml push
+        docker-compose -f dev/build/docker-compose.yml build
+        docker-compose -f dev/build/docker-compose.yml push
 
 #  beta:
 #    name: Publish Beta Images
