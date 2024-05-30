@@ -3,7 +3,7 @@ version: '3.7'  # Use a newer version of Docker Compose
 services:
   db:
     image: postgres:11  # PostgreSQL database
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_DB: medu
       POSTGRES_USER: medu
@@ -16,7 +16,8 @@ services:
     build:
       context: ../..
       dockerfile: dev/build/Dockerfile
-    restart: unless-stopped
+    image: olcayKarabiyik/medu:latest
+    restart: always
     depends_on:  # Ensure database is up before starting Wiki.js
       - db
     ports:

@@ -28,7 +28,7 @@ db:
   port: 5432
   user: wikijs
   pass: wikijsrocks
-  db: wiki
+  db: medu
   ssl: false
 
   # Optional - PostgreSQL / MySQL / MariaDB only:
@@ -82,7 +82,7 @@ ssl:
   dhparam: null
 
   # ++++++ For letsencrypt only ++++++
-  domain: wiki.yourdomain.com
+  domain: medu.yourdomain.com
   subscriberEmail: admin@example.com
 
 # ---------------------------------------------------------------------

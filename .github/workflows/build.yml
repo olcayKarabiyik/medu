@@ -1,4 +1,4 @@
-name: Build + Publish
+name: Build and Publish the image of medu + db to GHCR and DockerHub
 
 on:
   push:
@@ -34,6 +34,7 @@ jobs:
         fi
 
     - name: Disable DEV Flag + Set Version
+      # EXPLN: it is enough to call sudo apt-get update here once
       run: |
         sudo apt-get update
         sudo apt-get install jq -y
@@ -47,16 +48,16 @@ jobs:
 
     - name: Install Docker Compose
       run: |
-        sudo apt-get update
         sudo apt-get install docker-compose -y
-        ls
 
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+#    EXPLN: since we do not have a container on GHCR (because of we are private repo)
+#           this will wait.
+#    - name: Login to GitHub Container Registry
+#      uses: docker/login-action@v3
+#      with:
+#        registry: ghcr.io
+#        username: ${{ github.repository_owner }}
+#        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Login to DockerHub
       uses: docker/login-action@v3
@@ -65,9 +66,11 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker images
-      run: |
-        docker-compose -f dev/build/docker-compose.yml build
-        docker-compose -f dev/build/docker-compose.yml push
+        run: |
+          docker-compose version
+#      run: |
+#        docker-compose -f dev/build/docker-compose.yml build
+#        docker-compose -f dev/build/docker-compose.yml push
 
 #  beta:
 #    name: Publish Beta Images

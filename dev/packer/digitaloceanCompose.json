@@ -3,7 +3,7 @@
     "do_api_token": "{{env `DIGITALOCEAN_API_TOKEN`}}",
     "image_name": "wikijs-snapshot-{{timestamp}}",
     "apt_packages": "apt-transport-https ca-certificates curl jq linux-image-extra-virtual software-properties-common gnupg-agent openssl",
-    "application_name": "Wiki.js",
+    "application_name": "Medu",
     "application_version": "{{env `WIKI_APP_VERSION`}}",
     "docker_compose_version": "2.18.1"
   },
@@ -26,17 +26,6 @@
       "type": "shell",
       "inline": [
         "cloud-init status --wait"
-      ]
-    },
-    {
-      "type": "file",
-      "source": "scripts/099-one-click",
-      "destination": "/etc/update-motd.d/099-one-click"
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "chmod +x /etc/update-motd.d/099-one-click"
       ]
     },
     {
@@ -80,8 +69,8 @@
     {
       "type": "shell",
       "inline": [
-        "mv /tmp/docker-compose.yml /wiki/docker-compose.yml",
-        "cd /wiki",
+        "mv /tmp/docker-compose.yml /medu/dev/build/docker-compose.yml",
+        "cd /medu",
         "docker-compose up -d"
       ]
     },
