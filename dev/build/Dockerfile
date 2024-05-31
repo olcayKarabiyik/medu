@@ -3,6 +3,8 @@
 # ====================
 FROM node:18-alpine AS assets
 
+ENV NODE_ENV production
+
 RUN apk add yarn g++ make cmake python3 --no-cache
 
 WORKDIR /medu
@@ -26,9 +28,12 @@ RUN yarn patch-package
 # --- Release ---
 # ===============
 FROM node:18-alpine
-LABEL maintainer="requarks.io"
 
-RUN apk add bash curl git openssh gnupg sqlite --no-cache && \
+LABEL maintainer="olcayKarabiyik"
+
+ENV NODE_ENV production
+
+RUN apk add bash curl git openssh gnupg --no-cache && \
     mkdir -p /medu && \
     mkdir -p /logs && \
     mkdir -p /medu/data/content && \

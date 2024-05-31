@@ -1,16 +1,19 @@
-version: '3.7'  # Use a newer version of Docker Compose
+version: '3.9'
+
+name: medu
 
 services:
   db:
     image: postgres:11  # PostgreSQL database
     restart: always
     environment:
-      POSTGRES_DB: medu
-      POSTGRES_USER: medu
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password  # Use Docker secrets for sensitive data
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      - private
     volumes:
       - pgdata:/var/lib/postgresql/data  # Persistent volume for database data
-      - ./wikijs/.db-secret:/run/secrets/db_password:ro # Load database password from file
 
   medu:
     build:
@@ -26,14 +29,20 @@ services:
       DB_TYPE: postgres
       DB_HOST: db
       DB_PORT: 5432
-      DB_USER: medu
-      DB_NAME: medu
-      DB_PASS_FILE: /run/secrets/db_password
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+    networks:
+      - public
+      - private
     volumes:
       - ../..:/medu
       - /medu/node_modules
       - /medu/.git
-      - ./meduApp/.db-secret:/run/secrets/db_password:ro
+
+networks:
+  public:
+  private:
 
 volumes:
   pgdata:  # Named volume for PostgreSQL data persistence

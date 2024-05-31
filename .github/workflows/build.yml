@@ -34,7 +34,6 @@ jobs:
         fi
 
     - name: Disable DEV Flag + Set Version
-      # EXPLN: it is enough to call sudo apt-get update here once
       run: |
         sudo apt-get update
         sudo apt-get install jq -y
@@ -51,8 +50,6 @@ jobs:
         DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
         sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
-        docker-compose version
-
 
 #    EXPLN: since we do not have a container on GHCR (because of we are private repo)
 #           this will wait.
@@ -70,9 +67,13 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker images
+      env:
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASS: ${{ secrets.DB_PASS }}
+        DB_NAME: ${{ secrets.DB_NAME }}
       run: |
-        docker-compose -f dev/build/docker-compose.yml build
-        docker-compose -f dev/build/docker-compose.yml push
+        docker compose -f dev/build/docker-compose.yml build
+        docker compose -f dev/build/docker-compose.yml push
 
 #  beta:
 #    name: Publish Beta Images
