@@ -1,10 +1,9 @@
 version: '3.9'
 
-name: medu
-
 services:
   db:
-    image: postgres:11  # PostgreSQL database
+    container_name: medu-db
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -13,9 +12,10 @@ services:
     networks:
       - private
     volumes:
-      - pgdata:/var/lib/postgresql/data  # Persistent volume for database data
+      - db-data:/var/lib/postgresql/data  # Persistent volume for database data
 
   medu:
+    container_name: medu-app
     build:
       context: ../..
       dockerfile: dev/build/Dockerfile
@@ -45,4 +45,5 @@ networks:
   private:
 
 volumes:
-  pgdata:  # Named volume for PostgreSQL data persistence
+  medu:
+  db-data:  # Named volume for PostgreSQL data persistence
