@@ -4,43 +4,29 @@
 version: "3"
 services:
   db:
-    container_name: wiki-db
+    container_name: medu-db
     image: postgres:15-alpine
     environment:
-      POSTGRES_DB: wiki
-      POSTGRES_PASSWORD: wikijsrocks
-      POSTGRES_USER: wikijs
+      POSTGRES_DB: medu
+      POSTGRES_USER: olcay
+      POSTGRES_PASSWORD: ezzayim
+    ports:
+      - "15432:5432"
     logging:
       driver: "none"
     volumes:
       - db-data:/var/lib/postgresql/data
-    ports:
-      - "15432:5432"
 
   adminer:
-    container_name: wiki-adminer
+    container_name: medu-adminer
     image: adminer:latest
     logging:
       driver: "none"
     ports:
       - "3001:8080"
 
-  # solr:
-  #   container_name: wiki-solr
-  #   image: solr:7-alpine
-  #   logging:
-  #     driver: "none"
-  #   ports:
-  #     - "8983:8983"
-  #   volumes:
-  #     - solr-data:/opt/solr/server/solr/mycores
-  #   entrypoint:
-  #     - docker-entrypoint.sh
-  #     - solr-precreate
-  #     - wiki
-
-  wiki:
-    container_name: wiki-app
+  medu:
+    container_name: medu-app
     build:
       context: ../..
       dockerfile: dev/containers/Dockerfile
@@ -48,12 +34,34 @@ services:
       - db
     ports:
       - "3000:3000"
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: olcay
+      DB_NAME: medu
+      DB_PASS: ezzayim
     volumes:
-      - ../..:/wiki
-      - /wiki/node_modules
-      - /wiki/.git
-
+      - ../..:/medu
+      - /medu/node_modules
+      - /medu/.git
 
 volumes:
+  medu:
   db-data:
-  # solr-data:
+
+# solr-data:
+
+# solr:
+#   container_name: medu-solr
+#   image: solr:7-alpine
+#   logging:
+#     driver: "none"
+#   ports:
+#     - "8983:8983"
+#   volumes:
+#     - solr-data:/opt/solr/server/solr/mycores
+#   entrypoint:
+#     - docker-entrypoint.sh
+#     - solr-precreate
+#     - medu

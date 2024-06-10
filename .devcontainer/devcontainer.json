@@ -3,31 +3,35 @@
 // 2. Select "Remote Containers - Reopen in container"
 
 {
-  "name": "Wiki.js",
+  "name": "Medu",
   "dockerComposeFile": [
     "../dev/containers/docker-compose.yml"
   ],
   "forwardPorts": [3000, 3001],
-  "service": "wiki",
-  "workspaceFolder": "/wiki",
+  "service": "medu",
+  "workspaceFolder": "/medu",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
+  //"containerEnv": {
+  //  "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}",
+  //  "GITHUB_USER": "${localEnv:GITHUB_USER}"
+  //},
   "extensions": [
-	"EditorConfig.editorconfig",
-	"dbaeumer.vscode-eslint",
-	"christian-kohler.path-intellisense",
-	"mrmlnc.vscode-puglint",
-	"octref.vetur",
-	"dzannotti.vscode-babel-coloring",
-	"wayou.vscode-todo-highlight",
-	"visualstudioexptteam.vscodeintellicode",
-	"lukas-tr.materialdesignicons-intellisense",
-	"codezombiech.gitignore",
-	"kumar-harsh.graphql-for-vscode",
-	"mrmlnc.vscode-duplicate",
-	"oderwat.indent-rainbow",
-	"christian-kohler.npm-intellisense"
-],
+	  "EditorConfig.editorconfig",
+	  "dbaeumer.vscode-eslint",
+	  "christian-kohler.path-intellisense",
+	  "mrmlnc.vscode-puglint",
+	  "octref.vetur",
+	  "dzannotti.vscode-babel-coloring",
+	  "wayou.vscode-todo-highlight",
+	  "visualstudioexptteam.vscodeintellicode",
+	  "lukas-tr.materialdesignicons-intellisense",
+	  "codezombiech.gitignore",
+	  "kumar-harsh.graphql-for-vscode",
+	  "mrmlnc.vscode-duplicate",
+	  "oderwat.indent-rainbow",
+	  "christian-kohler.npm-intellisense"
+  ],
   "postCreateCommand": ["yarn", "install"]
 }

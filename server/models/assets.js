@@ -59,6 +59,7 @@ module.exports = class Asset extends Model {
 
     this.updatedAt = moment.utc().toISOString()
   }
+
   async $beforeInsert(context) {
     await super.$beforeInsert(context)
 

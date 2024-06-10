@@ -6,7 +6,7 @@
 const path = require('path')
 const { nanoid } = require('nanoid')
 const { DateTime } = require('luxon')
-const { gte } = require('semver')
+// const { gte } = require('semver')
 
 // ----------------------------------------
 // Init WIKI instance

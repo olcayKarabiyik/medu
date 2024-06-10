@@ -18,7 +18,6 @@ module.exports = class Tag extends Model {
         id: {type: 'integer'},
         tag: {type: 'string'},
         title: {type: 'string'},
-
         createdAt: {type: 'string'},
         updatedAt: {type: 'string'}
       }

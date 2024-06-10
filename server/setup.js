@@ -17,7 +17,7 @@ const semver = require('semver')
 module.exports = () => {
   WIKI.config.site = {
     path: '',
-    title: 'Wiki.js'
+    title: 'Medu'
   }
 
   WIKI.system = require('./core/system')
